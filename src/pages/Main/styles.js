@@ -1,25 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 
-export const Container = styled.div`
-  max-width: 600px;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  margin: 80px auto;
-
-  h1 {
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-
-    svg {
-      margin-right: 10px;
-    }
-  }
-`;
-
 export const Form = styled.form`
   margin-top: 30px;
   display: flex;
@@ -64,6 +44,29 @@ export const SubmitButton = styled.button.attrs(props => ({
 
     svg {
       animation: ${rotate} 2s linear infinite;
+    }
+  }
+`;
+
+export const List = styled.ul`
+  list-style: none;
+  margin-top: 30px;
+  padding-inline-start: 0 !important;
+
+  li {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & + li {
+      border-top: 1px solid #eee;
+    }
+
+    a {
+      color: #7159c1;
+      text-decoration: none;
     }
   }
 `;

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 
 import api from '../../services/api';
 
-import { Container, Form, SubmitButton } from './styles';
+import { Form, SubmitButton, List } from './styles';
+import Container from '../../components/Container';
 
 export default class Main extends Component {
   state = {
@@ -11,6 +13,23 @@ export default class Main extends Component {
     repositories: [],
     loading: false,
   };
+
+  // Busca dados do local storage
+  componentDidMount() {
+    const repositories = localStorage.getItem('repositories');
+
+    if (repositories) {
+      this.setState({ repositories: JSON.parse(repositories) });
+    }
+  }
+
+  // Salva dados no local storage
+  componentDidUpdate(_, prevState) {
+    const { repositories } = this.state;
+    if (prevState.repositories !== repositories) {
+      localStorage.setItem('repositories', JSON.stringify(repositories));
+    }
+  }
 
   handleInputChange = e => {
     this.setState({ newRepo: e.target.value });
@@ -36,7 +55,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { newRepo, loading } = this.state;
+    const { newRepo, loading, repositories } = this.state;
 
     return (
       <Container>
@@ -60,6 +79,17 @@ export default class Main extends Component {
             )}
           </SubmitButton>
         </Form>
+
+        <List>
+          {repositories.map(rep => (
+            <li key={rep.name}>
+              <span>{rep.name}</span>
+              <Link to={`/repository/${encodeURIComponent(rep.name)}`}>
+                Detalhes
+              </Link>
+            </li>
+          ))}
+        </List>
       </Container>
     );
   }
